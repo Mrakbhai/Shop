@@ -1,31 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'wouter';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
-import { useMutation } from '@tanstack/react-query';
-import { apiRequest } from '@/lib/queryClient';
 import { useAuth } from '@/lib/authContext';
+import { useTheme } from '@/lib/themeContext';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
 const registerSchema = z.object({
-  firebaseUid: z.string().optional(),
   name: z.string().min(2, { message: 'Name is required' }),
   email: z.string().email({ message: 'Please enter a valid email address' }),
-  username: z.string().min(3, { message: 'Username must be at least 3 characters' }),
   password: z.string().min(6, { message: 'Password must be at least 6 characters' }),
-  confirmPassword: z.string(),
-  role: z.string().optional(),
-  displayName: z.string().optional(),
-  bio: z.string().optional(),
-  avatar: z.string().optional()
+  confirmPassword: z.string()
 }).refine(data => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
@@ -35,82 +27,109 @@ type RegisterFormValues = z.infer<typeof registerSchema>;
 
 const RegisterPage: React.FC = () => {
   const [_, setLocation] = useLocation();
-  const { register: registerUser, loginWithGoogle } = useAuth();
+  const { register, loginWithGoogle, isLoading } = useAuth();
+  const { theme, currentTheme } = useTheme();
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       name: '',
-      username: '',
       email: '',
       password: '',
       confirmPassword: ''
     }
   });
 
-  const registerMutation = useMutation({
-    mutationFn: async (data: Omit<RegisterFormValues, 'confirmPassword'>) => {
-      return await apiRequest('POST', '/api/auth/register', data);
-    },
-    onSuccess: async (response) => {
-      const userData = await response.json();
-      
-      try {
-        await registerUser(userData.email, userData.password, userData.username);
-        toast({
-          title: 'Registration successful!',
-          description: 'Your account has been created.',
-        });
-        setLocation('/shop');
-      } catch (error) {
-        console.error('Error registering user:', error);
-      }
-    },
-    onError: (error) => {
-      toast({
-        title: 'Registration failed',
-        description: error instanceof Error ? error.message : 'An error occurred during registration',
-        variant: 'destructive'
-      });
-    }
-  });
-
   const onSubmit = async (data: RegisterFormValues) => {
-    const { confirmPassword, ...registerData } = data;
     try {
-      await registerUser(data.email, data.password, data.name);
-      toast({
-        title: 'Registration successful!',
-        description: 'Your account has been created.',
-      });
-      setLocation('/shop');
+      setIsSubmitting(true);
+      await register(data.email, data.password, data.name);
+      setLocation('/');
     } catch (error) {
-      toast({
-        title: 'Registration failed',
-        description: error instanceof Error ? error.message : 'An error occurred during registration',
-        variant: 'destructive'
-      });
+      console.error('Registration form error:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
+
+  const handleGoogleLogin = async () => {
+    try {
+      setIsSubmitting(true);
+      await loginWithGoogle();
+      setLocation('/');
+    } catch (error) {
+      console.error('Google login error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const getThemeStyles = () => {
+    switch (currentTheme) {
+      case 'premium': 
+        return {
+          title: "font-serif text-3xl",
+          container: "bg-zinc-900 text-zinc-100",
+          card: "bg-zinc-800 border border-zinc-700",
+          button: "bg-amber-600 hover:bg-amber-700",
+          outline: "border-zinc-600 text-zinc-300 hover:text-zinc-100"
+        };
+      case 'minimalist':
+        return {
+          title: "font-sans text-2xl",
+          container: "bg-neutral-50",
+          card: "bg-white shadow-sm",
+          button: "bg-black hover:bg-neutral-800",
+          outline: "border-neutral-300 text-neutral-700"
+        };
+      case 'experimental':
+        return {
+          title: "font-sans text-2xl text-indigo-100",
+          container: "bg-indigo-950 text-indigo-100",
+          card: "bg-indigo-900 border border-indigo-800",
+          button: "bg-indigo-600 hover:bg-indigo-700",
+          outline: "border-indigo-700 text-indigo-300 hover:text-indigo-100"
+        };
+      case 'dark':
+        return {
+          title: "font-sans text-2xl",
+          container: "bg-slate-950 text-white",
+          card: "bg-slate-900 border border-slate-800",
+          button: "bg-indigo-600 hover:bg-indigo-700",
+          outline: "border-slate-700 text-slate-300"
+        };
+      default: // light theme
+        return {
+          title: "font-sans text-2xl",
+          container: "bg-white",
+          card: "bg-white border border-gray-200",
+          button: "bg-blue-600 hover:bg-blue-700",
+          outline: "border-gray-300 text-gray-700"
+        };
+    }
+  };
+
+  const styles = getThemeStyles();
 
   return (
     <>
       <Helmet>
-        <title>Create Account | PrintOn</title>
-        <meta name="description" content="Create a new PrintOn account to start designing custom t-shirts and supporting independent artists." />
+        <title>Create Account | PrintCreator Marketplace</title>
+        <meta name="description" content="Create a new PrintCreator account to start designing custom items and access exclusive features." />
       </Helmet>
 
-      <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-secondary">
+      <div className={`min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 ${styles.container}`}>
         <motion.div
           className="w-full max-w-md"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <Card>
+          <Card className={styles.card}>
             <CardHeader className="space-y-1">
-              <CardTitle className="text-2xl font-bold text-center">Create an account</CardTitle>
+              <CardTitle className={`${styles.title} text-center`}>Create an account</CardTitle>
               <CardDescription className="text-center">
                 Enter your details to create a new account
               </CardDescription>
@@ -123,7 +142,7 @@ const RegisterPage: React.FC = () => {
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Name</FormLabel>
+                        <FormLabel>Full Name</FormLabel>
                         <FormControl>
                           <Input placeholder="John Doe" {...field} />
                         </FormControl>
@@ -145,6 +164,7 @@ const RegisterPage: React.FC = () => {
                       </FormItem>
                     )}
                   />
+                  
                   <FormField
                     control={form.control}
                     name="password"
@@ -158,6 +178,7 @@ const RegisterPage: React.FC = () => {
                       </FormItem>
                     )}
                   />
+                  
                   <FormField
                     control={form.control}
                     name="confirmPassword"
@@ -171,8 +192,13 @@ const RegisterPage: React.FC = () => {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit" className="w-full" disabled={registerMutation.isPending}>
-                    {registerMutation.isPending ? 'Creating account...' : 'Create account'}
+                  
+                  <Button 
+                    type="submit" 
+                    className={`w-full ${styles.button}`}
+                    disabled={isSubmitting || isLoading}
+                  >
+                    {isSubmitting || isLoading ? 'Creating account...' : 'Create account'}
                   </Button>
                 </form>
               </Form>
@@ -182,30 +208,16 @@ const RegisterPage: React.FC = () => {
                   <div className="w-full border-t border-border"></div>
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
+                  <span className={`${styles.card} px-2 text-muted-foreground`}>Or continue with</span>
                 </div>
               </div>
               
               <Button 
                 variant="outline" 
                 type="button" 
-                className="w-full mt-4 flex items-center justify-center gap-2"
-                onClick={async () => {
-                  try {
-                    await loginWithGoogle();
-                    toast({
-                      title: 'Success!',
-                      description: 'You have successfully logged in with Google.'
-                    });
-                    setLocation('/shop');
-                  } catch (error) {
-                    toast({
-                      title: 'Login failed',
-                      description: error instanceof Error ? error.message : 'Failed to login with Google',
-                      variant: 'destructive'
-                    });
-                  }
-                }}
+                className={`w-full mt-4 flex items-center justify-center gap-2 ${styles.outline}`}
+                onClick={handleGoogleLogin}
+                disabled={isSubmitting || isLoading}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48">
                   <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20s20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z" />
