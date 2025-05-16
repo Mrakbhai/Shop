@@ -64,7 +64,11 @@ app.use((req, res, next) => {
     port: 5000,
     host: "0.0.0.0",
     reusePort: true,
-  }, () => {
+  }, (err) => {
+    if (err) {
+      console.error('Failed to start server:', err);
+      process.exit(1);
+    }
     log(`serving on port ${port}`);
   });
 })();
