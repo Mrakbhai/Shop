@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useLocation } from 'wouter';
 import { Helmet } from 'react-helmet';
@@ -119,7 +120,6 @@ const RegisterPage: React.FC = () => {
           outline: "border-border text-muted-foreground hover:bg-accent"
         };
     }
-  };
   };
 
   const styles = getThemeStyles();
@@ -252,6 +252,6 @@ const RegisterPage: React.FC = () => {
       </div>
     </>
   );
-
+};
 
 export default RegisterPage;
