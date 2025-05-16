@@ -87,15 +87,6 @@ const LoginPage: React.FC = () => {
           button: "bg-black hover:bg-gray-800",
           outline: "border-gray-200 text-gray-700"
         };
-      default:
-        return {
-          title: "text-3xl font-bold text-foreground",
-          container: "bg-background",
-          card: "bg-card border-border",
-          button: "bg-primary text-primary-foreground hover:bg-primary/90",
-          outline: "border-border text-muted-foreground hover:bg-accent"
-        };
-    }
       case 'colorful':
         return {
           title: "font-sans text-2xl text-purple-800",
@@ -183,7 +174,7 @@ const LoginPage: React.FC = () => {
                   </Button>
                 </form>
               </Form>
-              
+
               <div className="relative mt-6">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-border"></div>
@@ -192,7 +183,7 @@ const LoginPage: React.FC = () => {
                   <span className={`${styles.card} px-2 text-muted-foreground`}>Or continue with</span>
                 </div>
               </div>
-              
+
               <Button 
                 variant="outline" 
                 type="button" 
@@ -207,7 +198,7 @@ const LoginPage: React.FC = () => {
                 </svg>
                 Continue with Google
               </Button>
-              
+
               <div className="text-center mt-4">
                 <a href="#" className="text-sm text-primary hover:underline">
                   Forgot your password?
