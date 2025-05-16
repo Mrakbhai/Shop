@@ -163,16 +163,16 @@
   .font-accent {
     @apply font-montserrat;
   }
-  
+
   /* Font utility classes */
   .font-inter {
     font-family: 'Inter', sans-serif;
   }
-  
+
   .font-sfpro {
     font-family: 'SF Pro Display', sans-serif;
   }
-  
+
   .font-montserrat {
     font-family: 'Montserrat', sans-serif;
   }
