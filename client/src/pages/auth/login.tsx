@@ -78,13 +78,7 @@ const LoginPage: React.FC = () => {
   };
 
   const getThemeStyles = () => {
-    return {
-      title: "text-3xl font-bold text-foreground",
-      container: "bg-background",
-      card: "bg-card border-border",
-      button: "bg-primary text-primary-foreground hover:bg-primary/90",
-      outline: "border-border text-muted-foreground hover:bg-accent"
-    };
+    switch (currentTheme) {
       case 'minimalist':
         return {
           title: "font-sans text-2xl",
@@ -93,6 +87,15 @@ const LoginPage: React.FC = () => {
           button: "bg-black hover:bg-gray-800",
           outline: "border-gray-200 text-gray-700"
         };
+      default:
+        return {
+          title: "text-3xl font-bold text-foreground",
+          container: "bg-background",
+          card: "bg-card border-border",
+          button: "bg-primary text-primary-foreground hover:bg-primary/90",
+          outline: "border-border text-muted-foreground hover:bg-accent"
+        };
+    }
       case 'colorful':
         return {
           title: "font-sans text-2xl text-purple-800",
