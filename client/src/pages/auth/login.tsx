@@ -38,6 +38,9 @@ const LoginPage: React.FC = () => {
   const onSubmit = async (data: LoginFormValues) => {
     try {
       setIsSubmitting(true);
+      if (!data.email || !data.password) {
+        throw new Error("Please enter both email and password");
+      }
       await loginWithEmail(data.email, data.password);
       toast({
         title: "Login successful",

@@ -174,6 +174,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
       
+      if (!user) {
+        throw new Error("No user data received from Google");
+      }
+
       // Verify user email is available
       if (!user.email) {
         throw new Error("No email found from Google account");
@@ -184,8 +188,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (!userData) {
         await setDoc(doc(db, "users", user.uid), {
           email: user.email,
-          displayName: user.displayName,
-          photoURL: user.photoURL,
+          displayName: user.displayName || '',
+          photoURL: user.photoURL || '',
           createdAt: new Date().toISOString(),
           role: "user",
           lastLogin: new Date().toISOString()
@@ -197,10 +201,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }, { merge: true });
       }
       
-      toast({
-        title: "Google login successful",
-        description: "Welcome to PrintCreator Marketplace!",
+      // Set the user state
+      setUser({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName || '',
+        photoURL: user.photoURL || '',
+        role: userData?.role || 'user'
       });
+
     } catch (error: any) {
       let errorMessage = "Failed to login with Google.";
       if (error.code === 'auth/popup-closed-by-user') {
