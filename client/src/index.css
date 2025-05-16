@@ -32,71 +32,74 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Blue-tinted Light Theme */
 :root {
-  --background: 0 0% 100%;
-  --foreground: 20 14.3% 4.1%;
-  --muted: 60 4.8% 95.9%;
-  --muted-foreground: 25 5.3% 44.7%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 20 14.3% 4.1%;
-  --card: 0 0% 100%;
-  --card-foreground: 20 14.3% 4.1%;
-  --border: 20 5.9% 90%;
-  --input: 20 5.9% 90%;
-  --primary: 207 90% 54%;
-  --primary-foreground: 211 100% 99%;
-  --secondary: 60 4.8% 95.9%;
-  --secondary-foreground: 24 9.8% 10%;
-  --accent: 60 4.8% 95.9%;
-  --accent-foreground: 24 9.8% 10%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 60 9.1% 97.8%;
-  --ring: 20 14.3% 4.1%;
+  --background: 214 100% 98%; /* #f0f7ff subtle blue tint */
+  --foreground: 222 47% 11%; /* #121828 */
+  --muted: 210 20% 96%; /* #f1f5fa */
+  --muted-foreground: 215 16% 47%; /* #667085 */
+  --popover: 0 0% 100%; /* white */
+  --popover-foreground: 222 47% 11%; /* #121828 */
+  --card: 0 0% 100%; /* white */
+  --card-foreground: 222 47% 11%; /* #121828 */
+  --border: 216 33% 93%; /* #e4e9f2 */
+  --input: 216 33% 93%; /* #e4e9f2 */
+  --primary: 210 100% 50%; /* #0078ff */
+  --primary-foreground: 0 0% 100%; /* white */
+  --secondary: 210 40% 96%; /* #f0f4fa */
+  --secondary-foreground: 222 47% 11%; /* #121828 */
+  --accent: 210 100% 50%; /* #0078ff */
+  --accent-foreground: 0 0% 100%; /* white */
+  --destructive: 0 84.2% 60.2%; 
+  --destructive-foreground: 0 0% 100%; /* white */
+  --ring: 210 100% 50%; /* #0078ff */
   --radius: 0.75rem;
 }
 
+/* Replit-style Dark Theme */
 .dark {
-  --background: 240 10% 3.9%;
-  --foreground: 0 0% 98%;
-  --muted: 240 3.7% 15.9%;
-  --muted-foreground: 240 5% 64.9%;
-  --popover: 240 10% 3.9%;
-  --popover-foreground: 0 0% 98%;
-  --card: 240 10% 3.9%;
-  --card-foreground: 0 0% 98%;
-  --border: 240 3.7% 15.9%;
-  --input: 240 3.7% 15.9%;
-  --primary: 99 100% 61%;
-  --primary-foreground: 240 5.9% 10%;
-  --secondary: 240 3.7% 15.9%;
-  --secondary-foreground: 0 0% 98%;
-  --accent: 240 3.7% 15.9%;
-  --accent-foreground: 0 0% 98%;
+  --background: 222 33% 10%; /* #0E1525 */
+  --foreground: 210 20% 98%; /* #F5F9FC */
+  --muted: 215 25% 27%; /* #1E2A4A */
+  --muted-foreground: 217 10% 64%; /* #A0AEC0 */
+  --popover: 220 34% 15%; /* #1C2333 */
+  --popover-foreground: 210 20% 98%; /* #F5F9FC */
+  --card: 220 34% 15%; /* #1C2333 */
+  --card-foreground: 210 20% 98%; /* #F5F9FC */
+  --border: 224 35% 20%; /* #2B3245 */
+  --input: 224 35% 20%; /* #2B3245 */
+  --primary: 212 84% 55%; /* #3485e4 */
+  --primary-foreground: 0 0% 100%; /* white */
+  --secondary: 217 19% 27%; /* #31405F */
+  --secondary-foreground: 210 20% 98%; /* #F5F9FC */
+  --accent: 212 84% 55%; /* #3485e4 */
+  --accent-foreground: 0 0% 100%; /* white */
   --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 98%;
-  --ring: 240 4.9% 83.9%;
+  --destructive-foreground: 210 20% 98%; /* #F5F9FC */
+  --ring: 212 84% 55%; /* #3485e4 */
 }
 
+/* Luxury Gold Theme */
 .premium {
-  --background: 0 0% 100%;
-  --foreground: 20 14.3% 4.1%;
-  --muted: 60 4.8% 95.9%;
-  --muted-foreground: 25 5.3% 44.7%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 20 14.3% 4.1%;
-  --card: 0 0% 100%;
-  --card-foreground: 20 14.3% 4.1%;
-  --border: 38 58% 90%;
-  --input: 38 58% 90%;
-  --primary: 38 90% 50%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 35 5% 96%;
-  --secondary-foreground: 38 90% 45%;
-  --accent: 38 90% 50%;
-  --accent-foreground: 0 0% 100%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 60 9.1% 97.8%;
-  --ring: 38 90% 50%;
+  --background: 0 0% 0%; /* pure black background */
+  --foreground: 35 100% 95%; /* light gold-ish text color */
+  --muted: 30 5% 15%; /* dark muted background */
+  --muted-foreground: 35 30% 80%; /* muted gold text */
+  --popover: 0 0% 5%; /* almost black popover */
+  --popover-foreground: 35 100% 95%; /* light gold text */
+  --card: 0 0% 7%; /* very dark card */
+  --card-foreground: 35 100% 95%; /* light gold text */
+  --border: 35 60% 20%; /* dark gold borders */
+  --input: 35 60% 20%; /* dark gold input borders */
+  --primary: 35 100% 50%; /* vibrant gold */
+  --primary-foreground: 0 0% 0%; /* black text on gold */
+  --secondary: 35 10% 15%; /* dark gold secondary */
+  --secondary-foreground: 35 100% 95%; /* light gold text */
+  --accent: 35 100% 50%; /* vibrant gold accent */
+  --accent-foreground: 0 0% 0%; /* black text on gold */
+  --destructive: 0 84.2% 60.2%; /* standard red */
+  --destructive-foreground: 0 0% 98%; /* light text on red */
+  --ring: 35 100% 50%; /* gold ring */
 }
 
 .minimalist {
