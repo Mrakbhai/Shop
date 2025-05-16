@@ -1,14 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { auth, googleProvider } from '../../server/firebase';
-import { 
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  onAuthStateChanged,
-  signOut,
-  sendPasswordResetEmail,
-  updateProfile
-} from 'firebase/auth';
+import { auth, loginWithEmail, loginWithGoogle, registerWithEmail, logoutUser, resetUserPassword } from './firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 import { useToast } from '@/hooks/use-toast';
 
 interface AuthContextType {
@@ -47,10 +39,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return unsubscribe;
   }, []);
 
-  const loginWithEmail = async (email: string, password: string) => {
+  const handleLoginWithEmail = async (email: string, password: string) => {
     try {
-      const result = await signInWithEmailAndPassword(auth, email, password);
-      setUser(result.user);
+      const user = await loginWithEmail(email, password);
+      setUser(user);
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -61,10 +53,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const loginWithGoogle = async () => {
+  const handleLoginWithGoogle = async () => {
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      setUser(result.user);
+      const user = await loginWithGoogle();
+      setUser(user);
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -75,11 +67,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const register = async (email: string, password: string, name: string) => {
+  const handleRegister = async (email: string, password: string, name: string) => {
     try {
-      const result = await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(result.user, { displayName: name });
-      setUser(result.user);
+      const user = await registerWithEmail(email, password, name);
+      setUser(user);
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -90,9 +81,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const logout = async () => {
+  const handleLogout = async () => {
     try {
-      await signOut(auth);
+      await logoutUser();
       setUser(null);
     } catch (error: any) {
       toast({
@@ -104,9 +95,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const resetPassword = async (email: string) => {
+  const handleResetPassword = async (email: string) => {
     try {
-      await sendPasswordResetEmail(auth, email);
+      await resetUserPassword(email);
       toast({
         title: "Password reset email sent",
         description: "Check your email for password reset instructions"
