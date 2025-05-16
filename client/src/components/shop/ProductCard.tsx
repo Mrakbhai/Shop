@@ -55,7 +55,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className="p-4">
         <div className="flex justify-between items-start">
           <div>
-            <h3 className="font-inter text-lg font-medium">{product.name}</h3>
+            <h3 className="text-lg product-title">{product.name}</h3>
             <p className="text-sm text-muted-foreground">
               By <span className="text-primary">{product.creator?.displayName || 'Unknown Creator'}</span>
             </p>

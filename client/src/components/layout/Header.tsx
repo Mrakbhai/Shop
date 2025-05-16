@@ -119,7 +119,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className={`sticky top-0 z-50 ${theme.headerClasses} shadow-sm theme-transition`}>
+    <header className="sticky top-0 z-50 bg-background border-b border-border shadow-sm theme-transition">
       <div className="container mx-auto">
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
