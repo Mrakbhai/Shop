@@ -173,9 +173,13 @@ const LoginPage: React.FC = () => {
               </Button>
 
               <div className="text-center mt-4">
-                <a href="#" className="text-sm text-primary hover:underline">
+                <Button 
+                  variant="link" 
+                  className="text-sm text-primary hover:underline p-0"
+                  onClick={() => setLocation('/forgot-password')}
+                >
                   Forgot your password?
-                </a>
+                </Button>
               </div>
             </CardContent>
             <CardFooter className="flex flex-col">

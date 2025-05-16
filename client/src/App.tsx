@@ -12,6 +12,7 @@ import Sell from "@/pages/sell";
 import About from "@/pages/about";
 import Login from "@/pages/auth/login";
 import Register from "@/pages/auth/register";
+import ForgotPassword from "@/pages/auth/forgot-password";
 import Profile from "@/pages/profile/index";
 import Orders from "@/pages/profile/orders";
 import CreatorDashboard from "@/pages/creator/dashboard";
@@ -34,6 +35,7 @@ function Router() {
       <Route path="/about" component={About} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
+        <Route path="/forgot-password" component={ForgotPassword} />
       <Route path="/profile" component={Profile} />
       <Route path="/profile/orders" component={Orders} />
       <Route path="/creator/dashboard" component={CreatorDashboard} />

@@ -117,7 +117,7 @@ const ShopPage: React.FC = () => {
         </div>
       </div>
       
-      <div className="container py-8">
+      <div className="container py-8 bg-background text-foreground min-h-screen">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Filters - Desktop */}
           <div className="hidden md:block w-64 flex-shrink-0">

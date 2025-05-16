@@ -67,12 +67,14 @@ const RegisterPage: React.FC = () => {
   const handleGoogleLogin = async () => {
     try {
       setIsSubmitting(true);
-      await loginWithGoogle();
-      toast({
-        title: "Login successful",
-        description: "Welcome to PrintOn!"
-      });
-      setLocation('/');
+      const result = await loginWithGoogle();
+      if (result.user) {
+        toast({
+          title: "Registration successful",
+          description: "Welcome to PrintOn!"
+        });
+        setLocation('/');
+      }
     } catch (error: any) {
       console.error('Google login error:', error);
       toast({

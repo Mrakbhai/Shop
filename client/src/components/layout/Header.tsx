@@ -147,7 +147,7 @@ const Header: React.FC = () => {
                   placeholder="Search products..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-40 h-9 pl-9 focus:w-60 transition-all duration-300"
+                  className="w-40 h-9 pl-9 focus:w-60 transition-all duration-300 bg-background text-foreground placeholder:text-muted-foreground"
                 />
                 <Search className="h-4 w-4 absolute left-2.5 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
               </form>
