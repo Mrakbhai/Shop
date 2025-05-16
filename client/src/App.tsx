@@ -23,6 +23,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { useTheme } from "@/lib/themeContext";
 import ScrollToTop from "@/components/ScrollToTop";
+import { useState, useEffect } from "react";
+import { cn } from "@/lib/utils";
 
 function Router() {
   return (
@@ -49,6 +51,11 @@ function Router() {
 
 function App() {
   const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
