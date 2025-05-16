@@ -43,10 +43,12 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (savedTheme && THEMES[savedTheme]) {
       setCurrentTheme(savedTheme);
       setThemeData(THEMES[savedTheme] as ThemeData);
-      document.documentElement.className = THEMES[savedTheme].bodyClasses;
+      
+      // Apply the theme class name directly
+      document.documentElement.className = savedTheme;
     } else {
       // Apply default theme if no saved theme
-      document.documentElement.className = THEMES.light.bodyClasses;
+      document.documentElement.className = 'light';
     }
   }, []);
 
@@ -54,7 +56,9 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (THEMES[newTheme]) {
       setCurrentTheme(newTheme);
       setThemeData(THEMES[newTheme] as ThemeData);
-      document.documentElement.className = THEMES[newTheme].bodyClasses;
+      
+      // Apply the theme class name directly - just the theme name
+      document.documentElement.className = newTheme;
       localStorage.setItem('preferred-theme', newTheme);
     }
   };

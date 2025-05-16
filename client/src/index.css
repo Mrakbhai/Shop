@@ -56,27 +56,27 @@
   --radius: 0.75rem;
 }
 
-/* Replit-style Dark Theme */
+/* Professional Dark Theme */
 .dark {
-  --background: 222 33% 10%; /* #0E1525 */
-  --foreground: 210 20% 98%; /* #F5F9FC */
-  --muted: 215 25% 27%; /* #1E2A4A */
-  --muted-foreground: 217 10% 64%; /* #A0AEC0 */
-  --popover: 220 34% 15%; /* #1C2333 */
-  --popover-foreground: 210 20% 98%; /* #F5F9FC */
-  --card: 220 34% 15%; /* #1C2333 */
-  --card-foreground: 210 20% 98%; /* #F5F9FC */
-  --border: 224 35% 20%; /* #2B3245 */
-  --input: 224 35% 20%; /* #2B3245 */
-  --primary: 212 84% 55%; /* #3485e4 */
+  --background: 222 47% 11%; /* #0f172a (slate-900) */
+  --foreground: 0 0% 100%; /* white */
+  --muted: 226 32% 24%; /* #1e293b (slate-800) */
+  --muted-foreground: 214 32% 91%; /* #e2e8f0 (slate-200) */
+  --popover: 222 47% 11%; /* #0f172a (slate-900) */
+  --popover-foreground: 0 0% 100%; /* white */
+  --card: 226 32% 24%; /* #1e293b (slate-800) */
+  --card-foreground: 0 0% 100%; /* white */
+  --border: 215 25% 27%; /* #334155 (slate-700) */
+  --input: 215 25% 27%; /* #334155 (slate-700) */
+  --primary: 217 91% 60%; /* #3b82f6 (blue-500) */
   --primary-foreground: 0 0% 100%; /* white */
-  --secondary: 217 19% 27%; /* #31405F */
-  --secondary-foreground: 210 20% 98%; /* #F5F9FC */
-  --accent: 212 84% 55%; /* #3485e4 */
+  --secondary: 215 25% 27%; /* #334155 (slate-700) */
+  --secondary-foreground: 0 0% 100%; /* white */
+  --accent: 217 91% 60%; /* #3b82f6 (blue-500) */
   --accent-foreground: 0 0% 100%; /* white */
   --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 20% 98%; /* #F5F9FC */
-  --ring: 212 84% 55%; /* #3485e4 */
+  --destructive-foreground: 0 0% 100%; /* white */
+  --ring: 217 91% 60%; /* #3b82f6 (blue-500) */
 }
 
 /* Luxury Gold Theme */

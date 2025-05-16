@@ -75,7 +75,7 @@ const ThemeSwitcher = () => {
   const getCurrentThemeIcon = () => {
     switch (currentTheme) {
       case 'dark':
-        return <Moon className="h-5 w-5 text-[#3485e4]" />;
+        return <Moon className="h-5 w-5 text-[#3b82f6]" />;
       case 'light':
         return <Sun className="h-5 w-5 text-blue-500" />;
       case 'premium':
@@ -93,7 +93,7 @@ const ThemeSwitcher = () => {
   const getThemeIcon = (themeKey: ThemeKey) => {
     switch (themeKey) {
       case 'dark':
-        return <Moon className="h-4 w-4 text-[#3485e4]" />;
+        return <Moon className="h-4 w-4 text-[#3b82f6]" />;
       case 'light':
         return <Sun className="h-4 w-4 text-blue-500" />;
       case 'premium':
