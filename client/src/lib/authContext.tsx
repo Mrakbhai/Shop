@@ -60,6 +60,38 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
+  // Listen to auth state changes
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (firebaseUser) => {
+      if (firebaseUser) {
+        const userData = await getFirebaseUserData(firebaseUser.uid);
+        setUser({
+          uid: firebaseUser.uid,
+          email: firebaseUser.email,
+          displayName: firebaseUser.displayName,
+          photoURL: firebaseUser.photoURL,
+          ...userData
+        });
+      } else {
+        setUser(null);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleAuthError = (error: any) => {
+    console.error('Auth error:', error);
+    const errorMessage = error.message || 'An authentication error occurred';
+    toast({
+      variant: "destructive",
+      title: "Authentication Error",
+      description: errorMessage
+    });
+    throw error;
+  };
+
   // Listen for Firebase auth state changes
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {

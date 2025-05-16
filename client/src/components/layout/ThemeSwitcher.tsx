@@ -162,6 +162,7 @@ const ThemeSwitcher = () => {
                   ${isActive ? 'bg-primary/10 font-medium' : 'hover:bg-accent/50'}`}
                 onClick={() => applyTheme(themeKey)}
                 disabled={isActive}
+                aria-checked={isActive}
               >
                 <div 
                   className={`w-6 h-6 rounded-full flex items-center justify-center

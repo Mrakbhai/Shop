@@ -53,7 +53,7 @@ const Header: React.FC = () => {
     const handleClickOutside = (event: MouseEvent) => {
       const mobileMenu = document.getElementById('mobile-menu');
       const menuButton = document.getElementById('menu-button');
-      
+
       if (mobileMenu && 
           !mobileMenu.contains(event.target as Node) && 
           menuButton && 
@@ -266,7 +266,7 @@ const Header: React.FC = () => {
                 aria-label="Toggle menu"
                 aria-expanded={isMenuOpen}
               >
-                {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-6 w-6 text-foreground" />}
               </Button>
             </div>
           </div>
@@ -293,7 +293,7 @@ const Header: React.FC = () => {
                   </Button>
                 </div>
               </form>
-              
+
               <MobileNavLink href="/">Home</MobileNavLink>
               <MobileNavLink href="/shop">Shop</MobileNavLink>
               <MobileNavLink href="/create">Create</MobileNavLink>
@@ -304,14 +304,14 @@ const Header: React.FC = () => {
                 <div className="z-50">
                   <ThemeSwitcher />
                 </div>
-                
+
                 <div className="flex items-center space-x-2">
                   <Button variant="ghost" size="icon" aria-label="Cart" asChild>
                     <Link href="/cart" onClick={closeMenu}>
                       <ShoppingCart className="h-5 w-5" />
                     </Link>
                   </Button>
-                  
+
                   {isAuthenticated && (
                     <Button 
                       variant="ghost" 

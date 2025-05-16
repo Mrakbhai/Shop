@@ -85,15 +85,13 @@ const RegisterPage: React.FC = () => {
   };
 
   const getThemeStyles = () => {
-    switch (currentTheme) {
-      case 'premium': 
-        return {
-          title: "font-serif text-3xl",
-          container: "bg-gradient-to-br from-gray-900 to-black text-gray-100",
-          card: "backdrop-blur-sm bg-black/70 border border-amber-900/50 shadow-lg",
-          button: "bg-amber-600 hover:bg-amber-700",
-          outline: "border-amber-900 text-amber-300 hover:text-amber-100"
-        };
+    return {
+      title: "text-3xl font-bold text-foreground",
+      container: "bg-background",
+      card: "bg-card border-border",
+      button: "bg-primary text-primary-foreground hover:bg-primary/90",
+      outline: "border-border text-muted-foreground hover:bg-accent"
+    };
       case 'minimalist':
         return {
           title: "font-sans text-2xl",
