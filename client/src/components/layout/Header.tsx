@@ -124,7 +124,7 @@ const Header: React.FC = () => {
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
           <Link href="/" onClick={closeMenu} className="flex items-center gap-2">
-            <span className={`${theme.fontFamily} text-2xl font-bold text-primary`}>PrintCreator</span>
+            <span className="font-montserrat text-2xl font-bold text-primary">PrintOn</span>
           </Link>
 
           {/* Desktop Navigation */}

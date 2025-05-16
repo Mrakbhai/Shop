@@ -64,34 +64,34 @@ const LoginPage: React.FC = () => {
       case 'premium': 
         return {
           title: "font-serif text-3xl",
-          container: "bg-zinc-900 text-zinc-100",
-          card: "bg-zinc-800 border border-zinc-700",
+          container: "bg-gradient-to-br from-gray-900 to-black text-gray-100",
+          card: "backdrop-blur-sm bg-black/70 border border-amber-900/50 shadow-lg",
           button: "bg-amber-600 hover:bg-amber-700",
-          outline: "border-zinc-600 text-zinc-300 hover:text-zinc-100"
+          outline: "border-amber-900 text-amber-300 hover:text-amber-100"
         };
       case 'minimalist':
         return {
           title: "font-sans text-2xl",
-          container: "bg-neutral-50",
+          container: "bg-gray-50",
           card: "bg-white shadow-sm",
-          button: "bg-black hover:bg-neutral-800",
-          outline: "border-neutral-300 text-neutral-700"
+          button: "bg-black hover:bg-gray-800",
+          outline: "border-gray-200 text-gray-700"
         };
-      case 'experimental':
+      case 'colorful':
         return {
-          title: "font-sans text-2xl text-indigo-100",
-          container: "bg-indigo-950 text-indigo-100",
-          card: "bg-indigo-900 border border-indigo-800",
-          button: "bg-indigo-600 hover:bg-indigo-700",
-          outline: "border-indigo-700 text-indigo-300 hover:text-indigo-100"
+          title: "font-sans text-2xl text-purple-800",
+          container: "bg-purple-100 text-purple-900",
+          card: "bg-white/90 border border-purple-200 shadow-md",
+          button: "bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700",
+          outline: "border-purple-300 text-purple-600 hover:text-purple-800"
         };
       case 'dark':
         return {
           title: "font-sans text-2xl",
-          container: "bg-slate-950 text-white",
-          card: "bg-slate-900 border border-slate-800",
+          container: "bg-gray-900 text-gray-50",
+          card: "bg-gray-800 border border-gray-700 shadow-md",
           button: "bg-indigo-600 hover:bg-indigo-700",
-          outline: "border-slate-700 text-slate-300"
+          outline: "border-gray-700 text-gray-300"
         };
       default: // light theme
         return {
@@ -161,7 +161,7 @@ const LoginPage: React.FC = () => {
                     className={`w-full ${styles.button}`} 
                     disabled={isSubmitting || isLoading}
                   >
-                    {isSubmitting || isLoading ? 'Signing in...' : 'Sign in'}
+                    Sign in
                   </Button>
                 </form>
               </Form>

@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { THEMES } from './constants';
 
-// Define theme type based on the keys in THEMES
-export type ThemeType = keyof typeof THEMES;
+// Define theme type based on the available themes
+export type ThemeType = 'light' | 'dark' | 'premium' | 'minimalist' | 'colorful';
 
 // Define the theme data interface based on the structure in constants.ts
 interface ThemeData {

@@ -1,161 +1,111 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useTheme } from '@/lib/themeContext';
 import { THEMES } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogClose,
-  DialogDescription
-} from '@/components/ui/dialog';
-import { Moon, Sun, Check, Palette, X } from 'lucide-react';
-import { motion } from 'framer-motion';
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { 
+  Moon, 
+  Sun, 
+  Check, 
+  Palette, 
+  PaintBucket, 
+  CircleUser, 
+  Settings 
+} from 'lucide-react';
 
-type ThemeKey = keyof typeof THEMES;
+type ThemeKey = 'light' | 'dark' | 'premium' | 'minimalist' | 'colorful';
 
 const ThemeSwitcher: React.FC = () => {
-  const { currentTheme, setTheme, theme } = useTheme();
-  const [selectedTheme, setSelectedTheme] = useState<ThemeKey>(currentTheme as ThemeKey);
-  const [isOpen, setIsOpen] = useState(false);
+  const { currentTheme, setTheme } = useTheme();
 
-  const handleSaveTheme = () => {
-    setTheme(selectedTheme);
-    document.documentElement.className = THEMES[selectedTheme].bodyClasses;
-    localStorage.setItem('preferred-theme', selectedTheme);
-    setIsOpen(false);
+  // Apply a theme immediately when selected
+  const applyTheme = (themeKey: ThemeKey) => {
+    setTheme(themeKey);
+    localStorage.setItem('preferred-theme', themeKey);
+    document.documentElement.className = THEMES[themeKey].bodyClasses;
   };
 
-  // Update selected theme when current theme changes
-  useEffect(() => {
-    setSelectedTheme(currentTheme as ThemeKey);
-  }, [currentTheme]);
+  // Get icon for the current theme
+  const getCurrentThemeIcon = () => {
+    switch (currentTheme) {
+      case 'dark':
+        return <Moon className="h-5 w-5" />;
+      case 'light':
+        return <Sun className="h-5 w-5" />;
+      case 'premium':
+        return <CircleUser className="h-5 w-5" />;
+      case 'colorful':
+        return <PaintBucket className="h-5 w-5" />;
+      case 'minimalist':
+        return <Palette className="h-5 w-5" />;
+      default:
+        return <Settings className="h-5 w-5" />;
+    }
+  };
 
-  // Icon based on current theme
-  const ThemeIcon = () => {
-    if (currentTheme === 'dark' || currentTheme === 'premium' || currentTheme === 'experimental') {
-      return <Moon className="h-[1.2rem] w-[1.2rem]" />;
-    } else if (currentTheme === 'light') {
-      return <Sun className="h-[1.2rem] w-[1.2rem]" />;
-    } else {
-      return <Palette className="h-[1.2rem] w-[1.2rem]" />;
+  // Get icon for a specific theme
+  const getThemeIcon = (themeKey: ThemeKey) => {
+    switch (themeKey) {
+      case 'dark':
+        return <Moon className="h-4 w-4" />;
+      case 'light':
+        return <Sun className="h-4 w-4" />;
+      case 'premium':
+        return <CircleUser className="h-4 w-4" />;
+      case 'colorful':
+        return <PaintBucket className="h-4 w-4" />;
+      case 'minimalist':
+        return <Palette className="h-4 w-4" />;
+      default:
+        return null;
     }
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
         <Button 
           variant="ghost" 
           size="icon" 
           aria-label="Change theme"
-          className="transition-all duration-200 hover:bg-primary/10"
+          className="rounded-full w-9 h-9 p-0"
         >
-          <ThemeIcon />
+          {getCurrentThemeIcon()}
         </Button>
-      </DialogTrigger>
-      <DialogContent className={`sm:max-w-md ${theme.cardClass} border-2`}>
-        <DialogHeader className="relative">
-          <DialogTitle className={`${theme.fontFamily} text-xl font-bold pr-8 ${theme.headingClass}`}>
-            Choose Your Theme
-          </DialogTitle>
-          <DialogDescription>
-            Select a theme that best matches your style preference
-          </DialogDescription>
-          <DialogClose className="absolute right-0 top-0 p-2 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
-            <X className="h-4 w-4" />
-            <span className="sr-only">Close</span>
-          </DialogClose>
-        </DialogHeader>
-
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          {(Object.keys(THEMES) as Array<ThemeKey>).map((themeKey) => {
-            const themeData = THEMES[themeKey];
-            const isSelected = selectedTheme === themeKey;
-            
-            return (
-              <motion.button
-                key={themeKey}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.2 }}
-                className={`relative p-4 rounded-lg border-2 flex flex-col items-center
-                  ${isSelected ? 'ring-2 ring-primary border-primary' : 'border-border'}
-                  transition-all duration-200 hover:border-primary/70`}
-                onClick={() => setSelectedTheme(themeKey)}
-                style={{ 
-                  backgroundColor: themeData.backgroundPreview,
-                }}
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-40">
+        <DropdownMenuLabel>Theme</DropdownMenuLabel>
+        {(Object.keys(THEMES) as Array<ThemeKey>).map((themeKey) => {
+          const themeData = THEMES[themeKey];
+          const isSelected = currentTheme === themeKey;
+          
+          return (
+            <DropdownMenuItem
+              key={themeKey}
+              className={`flex items-center gap-2 cursor-pointer py-2 ${isSelected ? 'bg-primary/10 font-medium' : ''}`}
+              onClick={() => applyTheme(themeKey)}
+            >
+              <div 
+                className="w-5 h-5 rounded-full flex items-center justify-center"
+                style={{ backgroundColor: themeData.primaryColor }}
               >
-                {/* Theme preview */}
-                <div className="w-full h-24 rounded mb-2 overflow-hidden relative">
-                  {/* Header */}
-                  <div 
-                    className="w-full h-6"
-                    style={{ 
-                      backgroundColor: themeKey === 'light' ? '#ffffff' : 
-                        themeKey === 'dark' ? '#1e293b' : 
-                        themeKey === 'premium' ? '#27272a' : 
-                        themeKey === 'minimalist' ? '#fafafa' : 
-                        '#312e81'
-                    }}
-                  >
-                    <div className="flex justify-between px-2">
-                      <div className="w-10 h-2 mt-2 rounded-full" style={{ backgroundColor: themeData.accentColor }} />
-                      <div className="flex space-x-1 mt-1.5">
-                        <div className="w-1.5 h-1.5 rounded-full bg-gray-400" />
-                        <div className="w-1.5 h-1.5 rounded-full bg-gray-400" />
-                        <div className="w-1.5 h-1.5 rounded-full bg-gray-400" />
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Content */}
-                  <div className="p-2">
-                    <div 
-                      className="w-full h-3 rounded-full mb-2"
-                      style={{ backgroundColor: themeData.borderColor }}
-                    />
-                    <div 
-                      className="w-3/4 h-3 rounded-full mb-2"
-                      style={{ backgroundColor: themeData.borderColor }}
-                    />
-                    <div 
-                      className="w-16 h-4 rounded-md mt-3"
-                      style={{ backgroundColor: themeData.accentColor }}
-                    />
-                  </div>
-                </div>
-                
-                {/* Theme name */}
-                <span 
-                  className={`text-sm font-medium mt-1
-                    ${themeKey === 'light' || themeKey === 'minimalist' ? 'text-black' : 'text-white'}`}
-                >
-                  {themeData.name}
-                </span>
-                
-                {/* Selection indicator */}
-                {isSelected && (
-                  <div className="absolute top-2 right-2 bg-primary text-white rounded-full p-0.5">
-                    <Check className="h-3 w-3" />
-                  </div>
-                )}
-              </motion.button>
-            );
-          })}
-        </div>
-
-        <Button 
-          onClick={handleSaveTheme} 
-          className={`w-full ${THEMES[selectedTheme].buttonClass}`}
-        >
-          Apply Theme
-        </Button>
-      </DialogContent>
-    </Dialog>
+                {isSelected && <Check className="h-3 w-3 text-white" />}
+              </div>
+              <span>{themeData.name}</span>
+              <div className="ml-auto">
+                {getThemeIcon(themeKey)}
+              </div>
+            </DropdownMenuItem>
+          );
+        })}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
