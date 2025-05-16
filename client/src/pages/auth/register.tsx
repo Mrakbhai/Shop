@@ -120,38 +120,6 @@ const RegisterPage: React.FC = () => {
         };
     }
   };
-        return {
-          title: "font-sans text-2xl",
-          container: "bg-gray-50",
-          card: "bg-white shadow-sm",
-          button: "bg-black hover:bg-gray-800",
-          outline: "border-gray-200 text-gray-700"
-        };
-      case 'colorful':
-        return {
-          title: "font-sans text-2xl text-purple-800",
-          container: "bg-purple-100 text-purple-900",
-          card: "bg-white/90 border border-purple-200 shadow-md",
-          button: "bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700",
-          outline: "border-purple-300 text-purple-600 hover:text-purple-800"
-        };
-      case 'dark':
-        return {
-          title: "font-sans text-2xl",
-          container: "bg-gray-900 text-gray-50",
-          card: "bg-gray-800 border border-gray-700 shadow-md",
-          button: "bg-indigo-600 hover:bg-indigo-700",
-          outline: "border-gray-700 text-gray-300"
-        };
-      default: // light theme
-        return {
-          title: "font-sans text-2xl",
-          container: "bg-white",
-          card: "bg-white border border-gray-200",
-          button: "bg-blue-600 hover:bg-blue-700",
-          outline: "border-gray-300 text-gray-700"
-        };
-    }
   };
 
   const styles = getThemeStyles();
