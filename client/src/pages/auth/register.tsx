@@ -127,7 +127,7 @@ const RegisterPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Create Account | PrintCreator Marketplace</title>
+        <title>Create Account | PrintOn Marketplace</title>
         <meta name="description" content="Create a new PrintCreator account to start designing custom items and access exclusive features." />
       </Helmet>
 
@@ -252,6 +252,6 @@ const RegisterPage: React.FC = () => {
       </div>
     </>
   );
-};
+
 
 export default RegisterPage;
