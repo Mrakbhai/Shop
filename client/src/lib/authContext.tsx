@@ -166,8 +166,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const loginWithGoogle = async (): Promise<void> => {
     try {
       setLoading(true);
+      // Configure Google OAuth provider
+      googleProvider.setCustomParameters({
+        prompt: 'select_account'
+      });
+      
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
+      
+      // Verify user email is available
+      if (!user.email) {
+        throw new Error("No email found from Google account");
+      }
       
       // Save user data to Firestore if this is their first login
       const userData = await getFirebaseUserData(user.uid);
@@ -177,8 +187,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           displayName: user.displayName,
           photoURL: user.photoURL,
           createdAt: new Date().toISOString(),
-          role: "user"
+          role: "user",
+          lastLogin: new Date().toISOString()
         });
+      } else {
+        // Update last login
+        await setDoc(doc(db, "users", user.uid), {
+          lastLogin: new Date().toISOString()
+        }, { merge: true });
       }
       
       toast({
@@ -186,10 +202,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         description: "Welcome to PrintCreator Marketplace!",
       });
     } catch (error: any) {
+      let errorMessage = "Failed to login with Google.";
+      if (error.code === 'auth/popup-closed-by-user') {
+        errorMessage = "Login cancelled. Please try again.";
+      } else if (error.code === 'auth/popup-blocked') {
+        errorMessage = "Login popup was blocked. Please allow popups for this site.";
+      }
+      
       toast({
         variant: "destructive",
         title: "Google login failed",
-        description: error.message || "Failed to login with Google.",
+        description: errorMessage
       });
       throw error;
     } finally {
@@ -201,22 +224,62 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const register = async (email: string, password: string, name: string): Promise<void> => {
     try {
       setLoading(true);
+      
+      // Validate input
+      if (!email || !password || !name) {
+        throw new Error("All fields are required");
+      }
+      
+      if (password.length < 6) {
+        throw new Error("Password must be at least 6 characters");
+      }
+      
+      // Check if email already exists
+      try {
+        const methods = await auth.fetchSignInMethodsForEmail(email);
+        if (methods && methods.length > 0) {
+          throw new Error("Email already in use");
+        }
+      } catch (error: any) {
+        if (error.message !== "Email already in use") {
+          throw error;
+        }
+      }
+      
+      // Create user
       const user = await firebaseRegister(email, password, name);
       
-      // Update profile with display name if needed
-      if (!user.displayName) {
-        await updateProfile(user, { displayName: name });
-      }
+      // Update profile with display name
+      await updateProfile(user, { displayName: name });
+      
+      // Create user document in Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        email,
+        displayName: name,
+        createdAt: new Date().toISOString(),
+        role: "user",
+        lastLogin: new Date().toISOString()
+      });
       
       toast({
         title: "Registration successful",
         description: "Your account has been created successfully!",
       });
     } catch (error: any) {
+      let errorMessage = "Failed to create your account. Please try again.";
+      
+      if (error.code === 'auth/email-already-in-use') {
+        errorMessage = "This email is already registered.";
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = "Please enter a valid email address.";
+      } else if (error.code === 'auth/weak-password') {
+        errorMessage = "Password is too weak. Use at least 6 characters.";
+      }
+      
       toast({
         variant: "destructive",
         title: "Registration failed",
-        description: error.message || "Failed to create your account. Please try again.",
+        description: errorMessage
       });
       throw error;
     } finally {
