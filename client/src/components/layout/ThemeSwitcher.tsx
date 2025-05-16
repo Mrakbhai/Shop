@@ -18,7 +18,7 @@ import {
   Sparkles 
 } from 'lucide-react';
 
-type ThemeKey = 'light' | 'dark' | 'premium' | 'minimalist' | 'colorful';
+type ThemeKey = 'light' | 'dark' | 'premium';
 
 const ThemeSwitcher = () => {
   const { currentTheme, setTheme } = useTheme();
@@ -80,10 +80,6 @@ const ThemeSwitcher = () => {
         return <Sun className="h-5 w-5 text-blue-500" />;
       case 'premium':
         return <Sparkles className="h-5 w-5 text-amber-400" />;
-      case 'colorful':
-        return <PaintBucket className="h-5 w-5 text-purple-500" />;
-      case 'minimalist':
-        return <Palette className="h-5 w-5 text-black" />;
       default:
         return <Sun className="h-5 w-5 text-blue-500" />;
     }
@@ -98,10 +94,6 @@ const ThemeSwitcher = () => {
         return <Sun className="h-4 w-4 text-blue-500" />;
       case 'premium':
         return <Sparkles className="h-4 w-4 text-amber-400" />;
-      case 'colorful':
-        return <PaintBucket className="h-4 w-4 text-purple-500" />;
-      case 'minimalist':
-        return <Palette className="h-4 w-4 text-black" />;
       default:
         return null;
     }

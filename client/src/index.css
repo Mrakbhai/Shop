@@ -79,72 +79,30 @@
   --ring: 217 91% 60%; /* #3b82f6 (blue-500) */
 }
 
-/* Luxury Gold Theme */
+/* Luxury Theme */
 .premium {
-  --background: 0 0% 0%; /* pure black background */
-  --foreground: 35 100% 95%; /* light gold-ish text color */
-  --muted: 30 5% 15%; /* dark muted background */
-  --muted-foreground: 35 30% 80%; /* muted gold text */
-  --popover: 0 0% 5%; /* almost black popover */
-  --popover-foreground: 35 100% 95%; /* light gold text */
-  --card: 0 0% 7%; /* very dark card */
-  --card-foreground: 35 100% 95%; /* light gold text */
-  --border: 35 60% 20%; /* dark gold borders */
-  --input: 35 60% 20%; /* dark gold input borders */
-  --primary: 35 100% 50%; /* vibrant gold */
-  --primary-foreground: 0 0% 0%; /* black text on gold */
-  --secondary: 35 10% 15%; /* dark gold secondary */
-  --secondary-foreground: 35 100% 95%; /* light gold text */
-  --accent: 35 100% 50%; /* vibrant gold accent */
-  --accent-foreground: 0 0% 0%; /* black text on gold */
+  --background: 222 47% 11%; /* #0f172a (Deep Slate Navy) */
+  --foreground: 0 0% 100%; /* white */
+  --muted: 226 32% 24%; /* #1e293b (slate-800) */
+  --muted-foreground: 214 32% 91%; /* #e2e8f0 (slate-200) */
+  --popover: 222 47% 11%; /* #0f172a */
+  --popover-foreground: 0 0% 100%; /* white */
+  --card: 226 32% 24%; /* #1e293b (slate-800) */
+  --card-foreground: 0 0% 100%; /* white */
+  --border: 215 25% 27%; /* #334155 (slate-700) */
+  --input: 215 25% 27%; /* #334155 (slate-700) */
+  --primary: 43 96% 56%; /* #f59e0b (amber-500) */
+  --primary-foreground: 222 47% 11%; /* #0f172a */
+  --secondary: 226 32% 24%; /* #1e293b (slate-800) */
+  --secondary-foreground: 0 0% 100%; /* white */
+  --accent: 45 93% 47%; /* #fbbf24 (yellow-400) */
+  --accent-foreground: 222 47% 11%; /* #0f172a */
   --destructive: 0 84.2% 60.2%; /* standard red */
   --destructive-foreground: 0 0% 98%; /* light text on red */
-  --ring: 35 100% 50%; /* gold ring */
+  --ring: 43 96% 56%; /* #f59e0b (amber-500) */
 }
 
-.minimalist {
-  --background: 0 0% 100%;
-  --foreground: 0 0% 0%;
-  --muted: 0 0% 98%;
-  --muted-foreground: 0 0% 45%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 0%;
-  --card: 0 0% 100%;
-  --card-foreground: 0 0% 0%;
-  --border: 0 0% 90%;
-  --input: 0 0% 90%;
-  --primary: 0 0% 0%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 0 0% 98%;
-  --secondary-foreground: 0 0% 0%;
-  --accent: 0 0% 0%;
-  --accent-foreground: 0 0% 100%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 60 9.1% 97.8%;
-  --ring: 0 0% 0%;
-}
 
-.experimental {
-  --background: 195 100% 25%;
-  --foreground: 0 0% 100%;
-  --muted: 195 30% 30%;
-  --muted-foreground: 210 40% 96.1%;
-  --popover: 195 100% 25%;
-  --popover-foreground: 0 0% 100%;
-  --card: 195 30% 30%;
-  --card-foreground: 0 0% 100%;
-  --border: 195 60% 40%;
-  --input: 195 60% 40%;
-  --primary: 174 84% 56%;
-  --primary-foreground: 195 100% 25%;
-  --secondary: 196 100% 40%;
-  --secondary-foreground: 0 0% 100%;
-  --accent: 174 84% 56%;
-  --accent-foreground: 195 100% 25%;
-  --destructive: 0 100% 50%;
-  --destructive-foreground: 210 40% 98%;
-  --ring: 174 84% 56%;
-}
 
 @layer base {
   * {
@@ -178,6 +136,55 @@
 
   .font-montserrat {
     font-family: 'Montserrat', sans-serif;
+  }
+  
+  /* Component Consistency Classes */
+  .card-component {
+    @apply bg-card text-card-foreground p-6 rounded-xl shadow-md border border-border;
+  }
+  
+  .dark .card-component, .premium .card-component {
+    @apply shadow-xl shadow-slate-900/50;
+  }
+  
+  .image-component {
+    @apply rounded-lg overflow-hidden;
+  }
+  
+  .dark .image-component, .premium .image-component {
+    @apply border border-slate-700;
+  }
+  
+  .section-container {
+    @apply p-6 rounded-xl;
+  }
+  
+  .dark .section-container, .premium .section-container {
+    @apply bg-gradient-to-br from-slate-900 to-slate-800;
+  }
+  
+  .heading-component {
+    @apply font-semibold;
+  }
+  
+  .dark .heading-component, .premium .heading-component {
+    @apply text-white;
+  }
+  
+  .text-body {
+    @apply text-foreground;
+  }
+  
+  .dark .text-body, .premium .text-body {
+    @apply text-slate-300;
+  }
+  
+  .text-muted {
+    @apply text-muted-foreground;
+  }
+  
+  .dark .text-muted, .premium .text-muted {
+    @apply text-slate-400;
   }
 }
 
