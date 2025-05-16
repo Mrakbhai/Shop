@@ -78,6 +78,46 @@ const ThemeSwitcher: React.FC = () => {
     return <div className="w-9 h-9"></div>;
   }
 
+  // Simple function to directly switch themes without dropdown
+  const handleThemeChange = (themeKey: ThemeKey) => {
+    applyTheme(themeKey);
+    // Force a reload to ensure theme applies fully
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
+  };
+
+  // For mobile, we'll use a simpler approach with direct buttons
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
+  if (isMobile) {
+    return (
+      <div className="flex gap-1 justify-center">
+        {(Object.keys(THEMES) as Array<ThemeKey>).map((themeKey) => {
+          const isSelected = currentTheme === themeKey;
+          return (
+            <Button
+              key={themeKey}
+              variant="ghost"
+              size="sm"
+              className={`p-1 min-w-0 rounded-full ${isSelected ? 'ring-2 ring-primary' : ''}`}
+              onClick={() => handleThemeChange(themeKey)}
+              title={THEMES[themeKey].name}
+            >
+              <div 
+                className="w-6 h-6 rounded-full flex items-center justify-center"
+                style={{ backgroundColor: THEMES[themeKey].primaryColor }}
+              >
+                {getThemeIcon(themeKey)}
+              </div>
+            </Button>
+          );
+        })}
+      </div>
+    );
+  }
+
+  // Desktop version with dropdown
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -91,34 +131,38 @@ const ThemeSwitcher: React.FC = () => {
           {getCurrentThemeIcon()}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuPortal>
-        <DropdownMenuContent align="end" className="w-48 z-50 mt-1">
-          <DropdownMenuLabel>Select Theme</DropdownMenuLabel>
-          {(Object.keys(THEMES) as Array<ThemeKey>).map((themeKey) => {
-            const themeData = THEMES[themeKey];
-            const isSelected = currentTheme === themeKey;
-            
-            return (
-              <DropdownMenuItem
-                key={themeKey}
-                className={`flex items-center gap-2 cursor-pointer py-2 ${isSelected ? 'bg-primary/10 font-medium' : ''}`}
-                onClick={() => applyTheme(themeKey)}
+      <DropdownMenuContent 
+        align="end" 
+        className="w-48 z-[100] mt-1" 
+        sideOffset={8}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <DropdownMenuLabel>Select Theme</DropdownMenuLabel>
+        {(Object.keys(THEMES) as Array<ThemeKey>).map((themeKey) => {
+          const themeData = THEMES[themeKey];
+          const isSelected = currentTheme === themeKey;
+          
+          return (
+            <DropdownMenuItem
+              key={themeKey}
+              className={`flex items-center gap-2 cursor-pointer py-2 ${isSelected ? 'bg-primary/10 font-medium' : ''}`}
+              onClick={() => handleThemeChange(themeKey)}
+              onSelect={(e) => e.preventDefault()}
+            >
+              <div 
+                className="w-5 h-5 rounded-full flex items-center justify-center"
+                style={{ backgroundColor: themeData.primaryColor }}
               >
-                <div 
-                  className="w-5 h-5 rounded-full flex items-center justify-center"
-                  style={{ backgroundColor: themeData.primaryColor }}
-                >
-                  {isSelected && <Check className="h-3 w-3 text-white" />}
-                </div>
-                <span>{themeData.name}</span>
-                <div className="ml-auto">
-                  {getThemeIcon(themeKey)}
-                </div>
-              </DropdownMenuItem>
-            );
-          })}
-        </DropdownMenuContent>
-      </DropdownMenuPortal>
+                {isSelected && <Check className="h-3 w-3 text-white" />}
+              </div>
+              <span>{themeData.name}</span>
+              <div className="ml-auto">
+                {getThemeIcon(themeKey)}
+              </div>
+            </DropdownMenuItem>
+          );
+        })}
+      </DropdownMenuContent>
     </DropdownMenu>
   );
 };

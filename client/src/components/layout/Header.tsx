@@ -301,7 +301,9 @@ const Header: React.FC = () => {
               <MobileNavLink href="/about">About</MobileNavLink>
 
               <div className="flex items-center justify-between px-4 py-3 mt-2 border-t border-border">
-                <ThemeSwitcher />
+                <div className="z-50">
+                  <ThemeSwitcher />
+                </div>
                 
                 <div className="flex items-center space-x-2">
                   <Button variant="ghost" size="icon" aria-label="Cart" asChild>
@@ -315,7 +317,7 @@ const Header: React.FC = () => {
                       variant="ghost" 
                       size="sm" 
                       onClick={handleLogout}
-                      className="flex items-center gap-1 text-red-500"
+                      className="flex items-center gap-1 text-red-500 opacity-100"
                     >
                       <LogOut className="h-4 w-4" />
                       <span>Logout</span>
