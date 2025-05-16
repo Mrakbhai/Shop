@@ -46,9 +46,18 @@ const RegisterPage: React.FC = () => {
     try {
       setIsSubmitting(true);
       await register(data.email, data.password, data.name);
+      toast({
+        title: "Registration successful",
+        description: "Your account has been created!"
+      });
       setLocation('/');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Registration form error:', error);
+      toast({
+        variant: "destructive",
+        title: "Registration failed",
+        description: error.message || "Failed to create account. Please try again."
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -58,9 +67,18 @@ const RegisterPage: React.FC = () => {
     try {
       setIsSubmitting(true);
       await loginWithGoogle();
+      toast({
+        title: "Login successful",
+        description: "Welcome to PrintOn!"
+      });
       setLocation('/');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Google login error:', error);
+      toast({
+        variant: "destructive",
+        title: "Google login failed", 
+        description: error.message || "Failed to login with Google."
+      });
     } finally {
       setIsSubmitting(false);
     }

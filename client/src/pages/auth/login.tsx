@@ -39,9 +39,18 @@ const LoginPage: React.FC = () => {
     try {
       setIsSubmitting(true);
       await loginWithEmail(data.email, data.password);
+      toast({
+        title: "Login successful",
+        description: "Welcome back to PrintOn!"
+      });
       setLocation('/');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Login form error:', error);
+      toast({
+        variant: "destructive",
+        title: "Login failed",
+        description: error.message || "Failed to login. Please check your credentials."
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -51,9 +60,18 @@ const LoginPage: React.FC = () => {
     try {
       setIsSubmitting(true);
       await loginWithGoogle();
+      toast({
+        title: "Login successful",
+        description: "Welcome to PrintOn!"
+      });
       setLocation('/');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Google login error:', error);
+      toast({
+        variant: "destructive",
+        title: "Google login failed",
+        description: error.message || "Failed to login with Google."
+      });
     } finally {
       setIsSubmitting(false);
     }
